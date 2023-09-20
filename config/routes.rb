@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
-  
+  root to: 'users#index'
+  resources :users
+  # root to: "home#index" 
+
   devise_for :users, controllers: {
+    # session: 'users/sessions',
     registrations: 'users/registrations'
   }
 
