@@ -2,13 +2,17 @@
 <h2>All Users</h2>
 <br>
 <ul>
-  <% @users.each do |user| %>
+  <% @users.each do |u| %>
     <li>
-      <%= user.username %>
-      <%= button_to 'Edit' , edit_user_path(user), method: :get %>
-      <%= button_to 'Delete' ,user_path(user), method: :delete%>
+      <%= u.username %>
+      <%= button_to 'Edit' , edit_user_path(u), method: :get %>
+      <%= button_to 'Delete' ,user_path(u), method: :delete%>
     </li>
-    <% end %>
+    <%= render 'roles/form' ,user: u %>
+    <% u.roles do |role| %>
+      <%= role.user_role %>
+    <% end %>  
+  <% end %>
 </ul>
 
 <% if user_signed_in? %>
