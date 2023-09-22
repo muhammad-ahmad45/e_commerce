@@ -1,5 +1,12 @@
 <%= form_with model: [ user, user.roles.build ] do |form| %>
-   <p>
+  <p>
+  <%= button_to 'Edit' , edit_user_path(user), method: :get %>
+  <p>
+  <p>
+  <%= button_to 'Delete' ,user_path(user), method: :delete%>
+  </p>
+
+  <p>
   <%= form.label :user_role %><br>
   <%= form.select :user_role, ['admin', 'staff', 'customer','Not Selected'] ,selected: 'Not Selected' %>
   </p>
@@ -8,6 +15,5 @@
       <%= form.submit %>
   </p>
 
-  
 
   <% end %>

@@ -2,16 +2,19 @@
 <h2>All Users</h2>
 <br>
 <ul>
-  <% @users.each do |u| %>
+  <% @users.each do |user| %>
     <li>
-      <%= u.username %>
-      <%= button_to 'Edit' , edit_user_path(u), method: :get %>
-      <%= button_to 'Delete' ,user_path(u), method: :delete%>
+      <%= user.username %>
     </li>
-    <%= render 'roles/form' ,user: u %>
-    <% u.roles do |role| %>
-      <%= role.user_role %>
-    <% end %>  
+    <% if current_user.if_admin?%>
+    <%= render 'roles/form' ,user: user %> 
+     
+    <br>
+    <p>
+     <%= button_to "Add user", new_user_session_path , method: :get %>
+    </p>
+
+    <% end %>
   <% end %>
 </ul>
 
