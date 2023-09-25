@@ -17,3 +17,4 @@ class RolesController < ApplicationController
       params.require(:role).permit(:user_role)
     end
   end
+  

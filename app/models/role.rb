@@ -5,4 +5,5 @@ class Role < ApplicationRecord
   validates :user_role, inclusion: { in: %w(admin staff customer),
     message: "%{value} is not a valid user" }
 
+    
 end

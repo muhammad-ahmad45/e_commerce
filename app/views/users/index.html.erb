@@ -2,17 +2,26 @@
 <h2>All Users</h2>
 <br>
 <ul>
-  <% @users.each do |user| %>
+  <% @users.each do |u| %>
     <li>
-      <%= user.username %>
+      <%= u.username %>
+
     </li>
-    <% if current_user.if_admin?%>
-    <%= render 'roles/form' ,user: user %> 
-     
-    <br>
-    <p>
-     <%= button_to "Add user", new_user_session_path , method: :get %>
-    </p>
+    <% if current_user.if_admin? %>
+       <%= render 'roles/form', user: u %> 
+       <br>
+
+       <%= button_to 'Edit', edit_user_path(u), method: :get %>
+       <%= button_to 'Delete', user_path(u), method: :delete, turbo_confirm: "Are you sure?" %>
+
+       <p>
+         <% u.roles.each do |r| %>
+          <%= link_to r.user_role, [u, r], data: {
+            turbo_method: :delete,
+            turbo_confirm: "Are you sure?"
+          } %> %>
+         <% end %> 
+       </p>
 
     <% end %>
   <% end %>
