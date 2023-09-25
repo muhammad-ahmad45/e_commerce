@@ -17,10 +17,7 @@
 
        <p>
           <% u.roles.each do |r| %>
-            <%= link_to r.user_role, [u, r], data: {
-              turbo_method: :delete,
-              turbo_confirm: "Are you sure?"
-            } %> %>
+            <%= r.user_role %>
          <% end %> 
        </p>
 
