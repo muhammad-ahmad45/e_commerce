@@ -1,12 +1,13 @@
 <h1>Welcome to our website!</h1>
 <h2>All Users</h2>
 <br>
+
 <ul>
   <% @users.each do |u| %>
     <li>
       <%= u.username %>
-
     </li>
+
     <% if current_user.if_admin? %>
        <%= render 'roles/form', user: u %> 
        <br>
@@ -15,11 +16,11 @@
        <%= button_to 'Delete', user_path(u), method: :delete, turbo_confirm: "Are you sure?" %>
 
        <p>
-         <% u.roles.each do |r| %>
-          <%= link_to r.user_role, [u, r], data: {
-            turbo_method: :delete,
-            turbo_confirm: "Are you sure?"
-          } %> %>
+          <% u.roles.each do |r| %>
+            <%= link_to r.user_role, [u, r], data: {
+              turbo_method: :delete,
+              turbo_confirm: "Are you sure?"
+            } %> %>
          <% end %> 
        </p>
 
