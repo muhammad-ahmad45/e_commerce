@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
+
   root to: 'users#index'
   
-  # root to: "home#index" 
 
   devise_for :users, controllers: {
     session: 'users/sessions',
@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   resources :users do
     resources :roles
     end
+
+  resources :products
+  
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
