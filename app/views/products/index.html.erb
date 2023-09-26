@@ -1,5 +1,19 @@
 <h1>Products</h1>
 
+<%= form_tag(products_path, method: :get) do %>
+
+	<label for="price"> <strong> Search by Price: </strong> </label>
+  <%= text_field_tag :price, params[:price], placeholder: 'Search products by price...' %>
+
+	<label for="quantity"> <strong> Search by total quantity: </strong> </label>
+  <%= text_field_tag :quantity, params[:quantity], placeholder: 'Search products by quantity...' %>
+
+	<div class="field">
+    <%= submit_tag 'Search' %>
+  </div>
+
+<% end %>
+
 <ul>
   <% @products.each do |product| %>
    <div>
@@ -9,6 +23,8 @@
      <p> <strong> Title: </strong> <%= product.title %>  </p>
      <p> <strong> Description: </strong> <%= product.description %>  </p>
      <p> <strong> Price: </strong> <%= product.price %>  </p>
+     <p> <strong> Totalquantity: </strong> <%= product.total_quantity %>  </p>
+     <p> <strong> Quantity in stock: </strong> <%= product.quantity_in_stock %>  </p>
    </div>
 
   <p>
