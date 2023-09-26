@@ -3,9 +3,12 @@
 <ul>
   <% @products.each do |product| %>
    <div>
-     <li>  <%= product.title %>  </li>
-     <li>  <%= product.description %>  </li> 
-     <li>  <%= product.price %>  </li>
+     <% if product.image.attached? %>
+       <%= image_tag product.image %>
+     <% end %>
+     <p> <strong> Title: </strong> <%= product.title %>  </p>
+     <p> <strong> Description: </strong> <%= product.description %>  </p>
+     <p> <strong> Price: </strong> <%= product.price %>  </p>
    </div>
 
   <p>

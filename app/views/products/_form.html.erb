@@ -41,7 +41,15 @@
         <div><%= message %></div>
       <% end %>
     </div>
-    
+
+    <div>
+      <%= form.label :image %><br>
+      <%= form.file_field :image %><br>
+      <% product.errors.full_messages_for(:image).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+    <br>
   <div>
     <%= form.submit %>
   </div>
