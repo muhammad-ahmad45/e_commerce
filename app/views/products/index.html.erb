@@ -1,37 +1,35 @@
 <h1>Products</h1>
+<%= form_with(url: products_path, method: :get) do |form| %>
+  <%= form.label :price, "<strong>Search by Price:</strong>".html_safe %>
+  <%= form.text_field :price, placeholder: 'Search products by price...' %>
 
-<%= form_tag(products_path, method: :get) do %>
+  <%= form.label :quantity, "<strong>Search by Total Quantity:</strong>".html_safe %>
+  <%= form.text_field :quantity, placeholder: 'Search products by quantity...' %>
 
-	<label for="price"> <strong> Search by Price: </strong> </label>
-  <%= text_field_tag :price, params[:price], placeholder: 'Search products by price...' %>
-
-	<label for="quantity"> <strong> Search by total quantity: </strong> </label>
-  <%= text_field_tag :quantity, params[:quantity], placeholder: 'Search products by quantity...' %>
-
-	<div class="field">
-    <%= submit_tag 'Search' %>
-  </div>
-
+  <div class="field">
+    <%= form.submit 'Search' %>
+  </div> <br>
 <% end %>
 
 <ul>
   <% @products.each do |product| %>
-   <div>
-     <% if product.image.attached? %>
-       <%= image_tag product.image %>
-     <% end %>
-     <p> <strong> Title: </strong> <%= product.title %>  </p>
-     <p> <strong> Description: </strong> <%= product.description %>  </p>
-     <p> <strong> Price: </strong> <%= product.price %>  </p>
-     <p> <strong> Totalquantity: </strong> <%= product.total_quantity %>  </p>
-     <p> <strong> Quantity in stock: </strong> <%= product.quantity_in_stock %>  </p>
-   </div>
+    <div>
+      <% if product.image.attached? %>
+        <%= image_tag product.image %>
+      <% end %>
+      <p> <strong> Title: </strong> <%= product.title %>  </p>
+      <p> <strong> Description: </strong> <%= product.description %>  </p>
+      <p> <strong> Price: </strong> <%= product.price %>  </p>
+      <p> <strong> Totalquantity: </strong> <%= product.total_quantity %>  </p>
+      <p> <strong> Quantity in stock: </strong> <%= product.quantity_in_stock %>  </p>
+    </div>
 
-  <p>
-    <%= button_to 'Edit', edit_product_path(product), method: :get %>
-    <%= button_to 'Delete', product_path(product), method: :delete, turbo_confirm: "Are you sure?" %>
-  </p>
+    <p>
+      <%= button_to 'Edit', edit_product_path(product), method: :get %>
+      <%= button_to 'Delete', product_path(product), method: :delete, turbo_confirm: "Are you sure?" %>
+    </p>
   <% end %>
 </ul>
 
-<%= button_to "Add New Product", new_product_path, method: :get %>
+<%= button_to "Add New Product", new_product_path, method: :get %> <br>
+<%= paginate @products %>

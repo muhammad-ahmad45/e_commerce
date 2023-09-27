@@ -1,18 +1,7 @@
 class ProductsController < ApplicationController
 
   def index
-    if params[:price].present? || params[:quantity].present?
-      @products = Product.where('price = :price OR total_quantity = :quantity', price: params[:price].to_f,
-      quantity: params[:quantity].to_i)
-
-    elsif params[:price].present? && params[:quantity].present?
-      @products = Product.where('price = :price AND total_quantity = :quantity', price: params[:price].to_f,
-      quantity: params[:quantity].to_i)
-
-    else
-      @products = Product.all
-
-    end
+    @products = Product.search(params).page(params[:page])
   end
 
   def new
