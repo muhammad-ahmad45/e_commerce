@@ -11,11 +11,10 @@
   </head>
 
   <body>
-
-  <div class="container-fluid">
+    <%= render "layouts/header" %>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
-
+    
     <%= yield %>
 
     <% if user_signed_in? %>
@@ -25,7 +24,6 @@
       <%= button_to "Sign In", new_user_session_path , method: :get %>
       <%= button_to "Sign Up", new_user_registration_path , method: :get %>
     <% end %>
-  </div>
 
   </body>
 </html>

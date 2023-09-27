@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-
+  before_action :get_params, only: [:edit, :update, :destroy]
   def index
     @products = Product.search(params).page(params[:page])
   end
@@ -19,12 +19,10 @@ class ProductsController < ApplicationController
   end
 
   def edit
-    @product = Product.find(params[:id])
+    
   end
 
   def update
-    @product = Product.find(params[:id])
-
     if @product.update(product_params)
       redirect_to '/products'
     else
@@ -33,7 +31,6 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-    @product = Product.find(params[:id])
     @product.destroy
     redirect_to '/products', status: :see_other
   end
@@ -41,6 +38,10 @@ class ProductsController < ApplicationController
   private
   def product_params
     params.require(:product).permit(:title, :description, :price, :total_quantity, :quantity_in_stock, :image)
+  end
+
+  def get_params
+    @product = Product.find(params[:id])
   end
 
 end
