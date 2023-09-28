@@ -5,24 +5,14 @@
 <ul>
   <% @users.each do |user| %>
     <li>
-      <%= user.username %>
+     <b> Username:</b> <%= user.username %>
     </li>
-
     <% if current_user.if_admin? %>
-       <%= render 'roles/form', user: user %> 
-       <br>
-
-       <%= button_to 'Edit', edit_user_path(user), method: :get %>
-       <%= button_to 'Delete', user_path(user), method: :delete, turbo_confirm: "Are you sure?" %>
-
-       <p>
-         <% user.roles.each do |role| %>
-           <%= role.user_role %>
-         <% end %> 
-       </p>
-
+      <%= button_to 'Show', user_path(user), method: :get %>
     <% end %>
-  <% end %>
+
+  <% end %> <br>
 <%= button_to 'Show Products', products_path, method: :get%>
 </ul>
-<%= paginate @users, left: 2, right: 2  %>
+<br>
+<%= paginate @users %>

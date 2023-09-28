@@ -1,0 +1,10 @@
+<b> Username:</b> <%= @user.username %> <br>
+<%= button_to 'Edit', edit_user_path(@user), method: :get %>
+<%= button_to 'Delete', user_path(@user), method: :delete, turbo_confirm: "Are you sure?" %> 
+
+<h6>Assigned Roles</h6>
+<% @user.roles.each do |role| %>
+  <ul>
+    <li> <%= role.user_role %> </li>
+  </ul>  
+<% end %>

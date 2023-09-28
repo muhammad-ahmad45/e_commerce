@@ -48,10 +48,10 @@
       <% product.errors.full_messages_for(:image).each do |message| %>
         <div><%= message %></div>
       <% end %>
+    </div> <br>
+
+    <div>
+      <%= form.submit %>
     </div>
-    <br>
-  <div>
-    <%= form.submit %>
-  </div>
 
   <% end %>

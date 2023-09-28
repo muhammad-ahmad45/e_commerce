@@ -14,9 +14,9 @@
     <%= render "layouts/header" %>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
-    
-    <%= yield %>
 
+    <%= yield %> <br>
+    
     <% if user_signed_in? %>
       <h3>Welcome, as <%= current_user.email %>!</h3>
       <%= button_to "Sign Out", destroy_user_session_path, method: :delete%>
