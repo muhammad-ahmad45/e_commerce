@@ -1,6 +1,6 @@
 <b> Username:</b> <%= @user.username %> <br>
-<%= button_to 'Edit', edit_user_path(@user), method: :get %>
-<%= button_to 'Delete', user_path(@user), method: :delete, turbo_confirm: "Are you sure?" %> 
+<%= button_to 'Edit', edit_user_path(@user), method: :get, class: "btn btn-primary" %>
+<%= button_to 'Delete', user_path(@user), method: :delete, turbo_confirm: "Are you sure?", class: "btn btn-primary" %> 
 
 <h6>Assigned Roles</h6>
 <% @user.roles.each do |role| %>
@@ -8,3 +8,4 @@
     <li> <%= role.user_role %> </li>
   </ul>  
 <% end %>
+<%= button_to "Back", :back, method: :get, class: "btn btn-primary" %>

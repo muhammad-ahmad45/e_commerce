@@ -32,5 +32,6 @@
 
 </ul>
 
-<%= button_to "Add New Product", new_product_path, method: :get %> <br>
+<%= button_to "Add New Product", new_product_path, method: :get %> 
+<%= button_to "Back", :back, method: :get, class: "btn btn-primary" %> <br>
 <%= paginate @products %>
