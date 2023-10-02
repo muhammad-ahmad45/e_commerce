@@ -14,8 +14,8 @@ class User < ApplicationRecord
       self.roles.exists?(user_role: 'admin')
   end
 
-  def has_role?(user_role)
-      self.roles.exists?(user_role)
-  end 
+  def has_customer?
+    self.roles.exists?(user_role: 'customer')
+  end
 
 end
