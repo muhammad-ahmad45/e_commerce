@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   root to: 'users#index'
   
   devise_for :users, controllers: {
@@ -8,7 +9,8 @@ Rails.application.routes.draw do
   
   resources :users do
     resources :roles
-    end
+    resource :cart
+  end
 
   resources :products
 

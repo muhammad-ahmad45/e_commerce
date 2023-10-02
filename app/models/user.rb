@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   has_many :permissions, dependent: :destroy
   has_many :roles, through: :permissions , dependent: :destroy
-       
+  has_one :cart
   SPECIAL_CHARACTERS = /.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\].*/
   validates :password, format: { with: SPECIAL_CHARACTERS  , message: "must include at least one special character"} ,on: :create
 
