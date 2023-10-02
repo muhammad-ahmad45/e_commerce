@@ -1,7 +1,22 @@
-<b> Username:</b> <%= @user.username %> <br>
-<%= button_to 'Edit', edit_user_path(@user), method: :get, class: "btn btn-primary" %>
-<%= button_to 'Delete', user_path(@user), method: :delete, turbo_confirm: "Are you sure?", class: "btn btn-primary" %> 
-
+<table class="table table-bordered" style="border-width:4px">
+  <thead>
+    <tr> 
+      <th> Username </th> 
+      <th> User Email </th> 
+      <th> Modify</th>  
+    </tr>  
+  </thead>
+  <tbody>
+      <tr>
+        <td>  <%= @user.username %> </td>
+        <td>  <%= @user.email %> </td>
+        <td> 
+          <%= button_to 'Edit', edit_user_path(@user), method: :get, class: "btn btn-primary" %>
+          <%= button_to 'Delete', user_path(@user), method: :delete, turbo_confirm: "Are you sure?", class: "btn btn-primary" %>  
+        </td>
+      </tr>
+  </tbody>
+</table>  <br>
 <h6>Assigned Roles</h6>
 <% @user.roles.each do |role| %>
   <ul>

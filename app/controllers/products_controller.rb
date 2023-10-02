@@ -1,5 +1,7 @@
 class ProductsController < ApplicationController
+
   before_action :get_params, only: [:edit, :update, :destroy]
+
   def index
     @products = Product.search(params).page(params[:page])
   end
