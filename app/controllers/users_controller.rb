@@ -1,31 +1,45 @@
 class UsersController < ApplicationController
+
+  before_action :get_user_params, only: [:show, :edit, :update, :destroy]
+  before_action :get_role_params, only: [:show, :edit, :update, :new]
   before_action :authenticate_user!
+
   def index
-    @users = User.all
+    @users = User.all.page(params[:page])
   end
 
-  def edit
-    @user = User.find(params[:id])
+  def new
+    @user = User.new
   end
+
+  def edit; end
 
   def update
-    @user = User.find(params[:id])
-
     if @user.update(user_params)
       redirect_to root_path
     else
-      render :index, status: :unprocessable_entity
+      render :edit, status: :unprocessable_entity
     end
   end
 
+  def show; end
+
   def destroy
-    @user = User.find(params[:id])
     @user.destroy
     redirect_to root_path, status: :see_other
-   end 
+  end 
 
    private
    def user_params
-     params.require(:user).permit(:email, :username)
+     params.require(:user).permit(:email, :username, :password, :password_confirmation, role_ids: [])
    end
+
+   def get_user_params
+    @user = User.find(params[:id])
+   end
+
+   def get_role_params
+    @roles = Role.all
+   end
+
 end
