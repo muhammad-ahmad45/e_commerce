@@ -10,8 +10,9 @@ Rails.application.routes.draw do
   resources :users do
     resources :roles
     resource :cart
+    post '/carts/add_to_cart/:product_id', to: 'carts#add_to_cart', as: 'add_to_cart'
   end
-
+  
   resources :products
 
 end

@@ -1,2 +1,29 @@
-<h1>Carts#show</h1>
-<p>Find me in app/views/carts/show.html.erb</p>
+<div class="col-lg-3 mx-auto">
+  <h1>Your Cart</h1>
+</div>  <br>
+<% total_bill = 0%> 
+<table class="table table-bordered" style="border-width:4px">
+  <thead>
+    <tr> 
+      <th> Title </th> 
+      <th> Quantity </th> 
+      <th> Unit Price</th>
+      <th> Total Price</th>
+      <th> Modification</th>  
+    </tr>  
+  </thead>
+  <tbody>
+    <% @cart.line_items.each do |line_item| %>
+      <tr>
+        <td>  <%= line_item.product.title %> </td>
+        <td>  <%= line_item.quantity %> </td>
+        <td> <%= line_item.product.price %> </td>
+        <% bill = line_item.product.price * line_item.quantity %> 
+        <td> <%= bill %> </td>
+      </tr>
+      <% total_bill += bill  %>
+    <% end %>     
+  </tbody>
+</table>
+<h4>Your total bill is: <%= total_bill %> Rs </h4> <br>
+<%= button_to "Back", :back, method: :get, class: "btn btn-primary" %>
