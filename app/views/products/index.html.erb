@@ -11,32 +11,36 @@
   </div> <br>
 <% end %>
 
-<ul>
+<div class="row row-cols-1 row-cols-md-2 g-4">
   <% @products.each do |product| %>
-    <div>
-      <% if product.image.attached? %>
-        <%= image_tag product.image %>
-      <% end %>
-      <p> <strong> Title: </strong> <%= product.title %>  </p>
-      <p> <strong> Description: </strong> <%= product.description %>  </p>
-      <p> <strong> Price: </strong> <%= product.price %>  </p>
-      <p> <strong> Totalquantity: </strong> <%= product.total_quantity %>  </p>
-      <p> <strong> Quantity in stock: </strong> <%= product.quantity_in_stock %>  </p>
+    <div class="col">
+      <div class="card">
+      <%= image_tag product.image, class: "card-img-top" if product.image.attached? %>
+        <div class="card-body">
+          <h5 class="card-title"><strong> Title: </strong> <%= product.title %></h5>
+          <h5 class="card-title"><strong> Price: </strong> <%= product.price %></h5>
+          <h5 class="card-title"><strong> Totalquantity: </strong> <%= product.total_quantity %></h5>
+          <h5 class="card-title"><strong> Quantity in stock: </strong> <%= product.quantity_in_stock %></h5>
+          <p class="card-text"><strong> Description: </strong> <%= product.description %> </p>
+        </div>
+        <p>
+        <% if current_user.if_admin? %>
+          <%= button_to 'Edit', edit_product_path(product), method: :get %>
+          <%= button_to 'Delete', product_path(product), method: :delete, turbo_confirm: "Are you sure?" %>
+        <% end %>
+        </p>  
+        <p>  
+          <% if current_user.has_customer? %>
+            <%= button_to 'Add to Cart', user_add_to_cart_path(current_user, product_id: product.id) %>
+            <%= button_to 'Show My Cart', user_cart_path(current_user), method: :get %> 
+          <% end %>
+        </p>
+      </div>
     </div>
     
-    <p>
-      <% if current_user.if_admin? %>
-        <%= button_to 'Edit', edit_product_path(product), method: :get %>
-        <%= button_to 'Delete', product_path(product), method: :delete, turbo_confirm: "Are you sure?" %>
-      <% end %>
-      <% if current_user.has_customer? %>
-        <%= button_to 'Add to Cart', user_add_to_cart_path(current_user, product_id: product.id) %>
-        <%= button_to 'Show My Cart', user_cart_path(current_user), method: :get %> 
-      <% end %>
-    </p>
-    <% end %>
+  <% end %>
 
-</ul> <br>
+</div> <br>
 
 <% unless current_user.has_customer? %>
   <%= button_to "Add New Product", new_product_path, method: :get %> 

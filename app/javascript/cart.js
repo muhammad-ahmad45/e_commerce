@@ -1,73 +1,38 @@
-<div class="col-lg-3 mx-auto">
-  <h1>Your Cart</h1>
-</div>  <br>
-<% total_bill = 0%> 
-<table class="table table-bordered" style="border-width:4px">
-  <thead>
-    <tr> 
-      <th> Title </th> 
-      <th> Quantity </th> 
-      <th> Unit Price</th>
-      <th> Total Price</th>
-      <th> Modification</th>  
-    </tr>  
-  </thead>
-  <tbody>
-    <% @cart.line_items.each do |line_item| %>
-      <tr>
-        <td> <%= line_item.product.title %> </td>
-        <td class="quantity" data-line-item-id="<%= line_item.id %>"><%= line_item.quantity %></td>
-        <td><%= line_item.product.price %></td>
-        <% bill = line_item.product.price * line_item.quantity %>
-        <td> <%= bill %> </td>
-        <td> 
-          <button class="increase-quantity" data-line-item-id="<%= line_item.id %>">+</button>
-          <button class="decrease-quantity" data-line-item-id="<%= line_item.id %>">-</button>
-          <%= button_to 'Remove', line_item_path(line_item), method: :delete %>
-        </td>
-      </tr>
-      <% total_bill += bill  %>
-    <% end %>     
-  </tbody>
-</table>
-<h4>Your total bill is: <%= total_bill %> Rs </h4> <br>
-<%= button_to 'Remove All Items', user_cart_path(current_user, cart_id: @cart.id), method: :delete %>
-<%= button_to "Back", :back, method: :get, class: "btn btn-primary" %>
-
-<script>
-  $(document).ready(function() {
+$(document).ready(function() {
     // Handle the click event for the "+" button
     $('.increase-quantity').click(function() {
       var lineItemId = $(this).data('line-item-id');
       var quantityElement = $('.quantity[data-line-item-id="' + lineItemId + '"]');
       var totalElement = $('.total[data-line-item-id="' + lineItemId + '"]');
-
+  
       // Increment the quantity by 1
       var newQuantity = parseInt(quantityElement.text()) + 1;
       quantityElement.text(newQuantity);
-
+  
       // Update the total price for this line item
       var unitPrice = parseFloat($(this).closest('tr').find('td:eq(2)').text());
       var newTotal = newQuantity * unitPrice;
       totalElement.text(newTotal);
-
+  
+      // You can also make an AJAX request to update the server-side cart here if needed
     });
-
+  
     // Handle the click event for the "-" button
     $('.decrease-quantity').click(function() {
       var lineItemId = $(this).data('line-item-id');
       var quantityElement = $('.quantity[data-line-item-id="' + lineItemId + '"]');
       var totalElement = $('.total[data-line-item-id="' + lineItemId + '"]');
-
+  
       // Decrement the quantity by 1, but ensure it doesn't go below 1
       var newQuantity = Math.max(parseInt(quantityElement.text()) - 1, 1);
       quantityElement.text(newQuantity);
-
+  
       // Update the total price for this line item
       var unitPrice = parseFloat($(this).closest('tr').find('td:eq(2)').text());
       var newTotal = newQuantity * unitPrice;
       totalElement.text(newTotal);
-
+  
+      // You can also make an AJAX request to update the server-side cart here if needed
     });
   });
-</script>
+  

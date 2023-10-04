@@ -1,10 +1,9 @@
 class CartsController < ApplicationController
   
-  before_action :set_cart, only: [:add_to_cart, :show]
+  before_action :set_cart
 
   def add_to_cart
     @product = Product.find(params[:product_id])
-# Check if the product is already in the cart
     @line_item = @cart.line_items.find_by(product: @product)
 
     if @line_item
@@ -20,15 +19,13 @@ class CartsController < ApplicationController
     end
   end
 
-  def edit
-  end
-
-  def update
-  end
-
   def show; end
 
   def destroy
+    @cart = Cart.find(params[:cart_id])
+    @line_items = @cart.line_items
+    @line_items.destroy_all
+    redirect_to user_cart_path(current_user, @cart)
   end
 
   private
@@ -39,5 +36,6 @@ class CartsController < ApplicationController
     else  
       @cart = current_user.create_cart
     end 
-  end  
-end
+  end
+ 
+end 

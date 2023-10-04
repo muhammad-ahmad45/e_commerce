@@ -1,6 +1,6 @@
 class Product < ApplicationRecord
 
-  paginates_per 1
+  paginates_per 2
 
   has_one_attached :image
   has_many :line_items, dependent: :destroy
