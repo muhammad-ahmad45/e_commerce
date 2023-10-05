@@ -15,6 +15,10 @@ Rails.application.routes.draw do
   end
   
   resources :products
-  resources :line_items, only: [:update, :edit, :destroy]
+  resources :line_items, only: [:update, :edit, :destroy] do
+    member do
+      patch 'update_quantity'
+    end
+  end
 
 end

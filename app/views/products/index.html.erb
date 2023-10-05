@@ -1,45 +1,51 @@
-<h1>Products</h1>
-<%= form_with(url: products_path, method: :get) do |form| %>
-  <%= form.label :price, "<strong>Search by Price:</strong>".html_safe %>
-  <%= form.text_field :price, placeholder: 'Search products by price...' %>
+<div class="col-lg-3 mx-auto text-center">
+  <h1>Products</h1>
+</div>
 
-  <%= form.label :quantity, "<strong>Search by Total Quantity:</strong>".html_safe %>
-  <%= form.text_field :quantity, placeholder: 'Search products by quantity...' %>
+<div class="text-center">
+  <%= form_with(url: products_path, method: :get) do |form| %>
+    <%= form.label :price, "<strong>Search by Price:</strong>".html_safe %>
+    <%= form.text_field :price, placeholder: 'Search products by price...' %>
 
-  <div class="field">
-    <%= form.submit 'Search' %>
-  </div> <br>
-<% end %>
+    <%= form.label :quantity, "<strong>Search by Total Quantity:</strong>".html_safe %>
+    <%= form.text_field :quantity, placeholder: 'Search products by quantity...' %>
+    
+    <div class="field">
+      <%= form.submit 'Search' %>
+    </div> <br>
+  <% end %>
+</div>
 
-<div class="row row-cols-1 row-cols-md-2 g-4">
+
+<div class="row row-cols-1 row-cols-md-4 g-2">
   <% @products.each do |product| %>
     <div class="col">
-      <div class="card">
-      <%= image_tag product.image, class: "card-img-top" if product.image.attached? %>
-        <div class="card-body">
-          <h5 class="card-title"><strong> Title: </strong> <%= product.title %></h5>
-          <h5 class="card-title"><strong> Price: </strong> <%= product.price %></h5>
-          <h5 class="card-title"><strong> Totalquantity: </strong> <%= product.total_quantity %></h5>
-          <h5 class="card-title"><strong> Quantity in stock: </strong> <%= product.quantity_in_stock %></h5>
-          <p class="card-text"><strong> Description: </strong> <%= product.description %> </p>
+      <div class="card-container">
+        <div class= "card" style="border: 1px solid #000;">
+          <%= image_tag product.image, class: "card-img-top product-image" if product.image.attached? %>
+          <div class="card-body">
+            <h5 class="card-title"><strong> Title: </strong> <%= product.title %></h5>
+            <h5 class="card-title"><strong> Price: </strong> <%= product.price %></h5>
+            <h5 class="card-title"><strong> Totalquantity: </strong> <%= product.total_quantity %></h5>
+            <h5 class="card-title"><strong> Quantity in stock: </strong> <%= product.quantity_in_stock %></h5>
+            <p class="card-text"><strong> Description: </strong> <%= product.description %> </p>
+          </div>
+          <div class="text-center">
+            <% if current_user.if_admin? %>
+              <%= button_to 'Edit', edit_product_path(product), method: :get %>
+              <%= button_to 'Delete', product_path(product), method: :delete, turbo_confirm: "Are you sure?" %>
+            <% end %>
+          </div>
+          <div class="text-center">
+            <% if current_user.has_customer? %>
+              <%= button_to 'Add to Cart', user_add_to_cart_path(current_user, product_id: product.id) %>
+              <%= button_to 'Show My Cart', user_cart_path(current_user), method: :get %> 
+            <% end %>
+          </div>
         </div>
-        <p>
-        <% if current_user.if_admin? %>
-          <%= button_to 'Edit', edit_product_path(product), method: :get %>
-          <%= button_to 'Delete', product_path(product), method: :delete, turbo_confirm: "Are you sure?" %>
-        <% end %>
-        </p>  
-        <p>  
-          <% if current_user.has_customer? %>
-            <%= button_to 'Add to Cart', user_add_to_cart_path(current_user, product_id: product.id) %>
-            <%= button_to 'Show My Cart', user_cart_path(current_user), method: :get %> 
-          <% end %>
-        </p>
       </div>
-    </div>
-    
+    </div> 
   <% end %>
-
 </div> <br>
 
 <% unless current_user.has_customer? %>

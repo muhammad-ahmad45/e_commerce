@@ -14,6 +14,17 @@ class LineItemsController < ApplicationController
     end
   end
 
+  def update_quantity
+    @line_item = LineItem.find(params[:id])
+    new_quantity = params[:new_quantity].to_i
+    byebug
+    if @line_item.update(quantity: new_quantity)
+      render json: { success: true, new_quantity: new_quantity }
+    else
+      render json: { success: false, errors: @line_item.errors.full_messages }
+    end
+  end
+
   def destroy
     @line_item = LineItem.find(params[:id])
     @line_item.destroy
