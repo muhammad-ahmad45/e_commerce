@@ -1,6 +1,6 @@
 class Product < ApplicationRecord
 
-  paginates_per 3
+  paginates_per 2
 
   has_one_attached :image
   has_many :line_items, dependent: :destroy
@@ -9,12 +9,12 @@ class Product < ApplicationRecord
   validates :title, :description, :price, :total_quantity, :quantity_in_stock, :image, presence: true
 
   def self.search(attributes)
-    if attributes[:price].present? && attributes[:quantity].present?
-      value = Product.where('price = :price AND total_quantity = :quantity', price: attributes[:price].to_f,
-          quantity: attributes[:quantity].to_i)
-    elsif attributes[:price].present? || attributes[:quantity].present?
-      value = Product.where('price = :price OR total_quantity = :quantity', price: attributes[:price].to_f,
-          quantity: attributes[:quantity].to_i)
+    if attributes[:title].present? || attributes[:min_price].present? || attributes[:max_price].present?
+      value = Product.where(
+        'title = :title OR price <= :max_price OR price >= :min_price',
+        title: attributes[:title].to_s,
+        max_price: attributes[:max_price].to_f,
+        min_price: attributes[:min_price].to_f)
     else
       value = Product.all
     end

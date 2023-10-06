@@ -3,7 +3,9 @@ class ProductsController < ApplicationController
   before_action :get_params, only: [:edit, :update, :destroy]
 
   def index
-    @products = Product.search(params).page(params[:page])
+    # byebug
+    # @products = Product.search(params).page(params[:page])
+    @products = Product.where("price >= ? AND price <= ? AND title LIKE ?", params[:price], params[:price], params[:title]).page(params[:page])
   end
 
   def new

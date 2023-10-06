@@ -3,8 +3,9 @@ Rails.application.routes.draw do
   root to: 'users#index'
   
   devise_for :users, controllers: {
-    session: 'users/sessions',
-    registrations: 'users/registrations'
+    registrations: 'users/registrations',
+    confirmations: 'users/confirmations', 
+    session: 'users/sessions'
   }
   
   resources :users do
@@ -15,10 +16,8 @@ Rails.application.routes.draw do
   end
   
   resources :products
-  resources :line_items, only: [:update, :edit, :destroy] do
-    member do
-      patch 'update_quantity'
-    end
-  end
+  resources :line_items, only: [:update, :edit, :destroy] 
+  patch 'line_items/:id/update_quantity', to: 'line_items#update_quantity', as: :update_quantity_line_item
+
 
 end

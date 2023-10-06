@@ -1,20 +1,20 @@
-<div class="col-lg-3 mx-auto">
+<div class="text-center">
   <h1>Shopping Cart</h1>
 </div>  <br>
 <% total_bill = 0%> 
-<div class="container">
+<div class="container d-flex flex-column align-items-center justify-content-center">
   <% @cart.line_items.each do |line_item| %>
-    <div class="card mb-3" style="width: 1000px; height: 300px; border: 3px solid #000; overflow: hidden;">
+    <div class="card mb-3" style="width: 1000px; height: 200px; border: 3px solid #000; overflow: hidden;">
       <div class="row g-0">
         <div class="col-md-4">
           <% if line_item.product.image.attached? %>
-            <div class="image-container" style="height: 300px; width: 300px; float: left;">
+            <div class="image-container" style="height: 200px; width: 200px;">
               <%= image_tag line_item.product.image, class: "img-fluid h-100 object-fit-cover" %>
             </div>
           <% end %>
         </div>
-        <div class="col-md-8">
-          <div class="card-body" style="margin-right: 20px;"> <!-- Adjust margin-right as needed -->
+        <div class="col-md-6">
+          <div class="card-body">
             <h5 class="card-title"><%= line_item.product.title %></h5>
             <p class="card-text">
               <strong>Quantity: </strong>
@@ -30,18 +30,21 @@
               <%= bill %>
               <% total_bill += bill %>
             </p>
-            <p class="card-text" style="clear: both; float: right;">
-              <button class="increase-quantity btn btn-primary" data-line-item-id="<%= line_item.id %>">+</button>
-              <button class="decrease-quantity btn btn-primary" data-line-item-id="<%= line_item.id %>">-</button>
-              <%= button_to 'Remove', line_item_path(line_item), method: :delete, class: "btn btn-danger" %>
-            </p>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="text-right p-3">
+            <button class="increase-quantity btn btn-primary" data-line-item-id="<%= line_item.id %>">+</button>
+            <button class="decrease-quantity btn btn-primary" data-line-item-id="<%= line_item.id %>">-</button>
+          </div>
+          <div class="text-right p-3">
+            <%= button_to 'Remove', line_item_path(line_item), method: :delete, class: "btn btn-danger" %>
           </div>
         </div>
       </div>
     </div>
   <% end %>
-</div>  <br>
-
+</div> <br>
 <div class="text-center">
   <h4>Your total bill is: <%= total_bill %> Rs </h4>
 </div> <br>
