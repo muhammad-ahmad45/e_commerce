@@ -2,7 +2,3 @@
 import "@hotwired/turbo-rails"
 import "./controllers"
 import * as bootstrap from "bootstrap"
-
-$(document).on('turbo:load', function() {
-    debugger
-})

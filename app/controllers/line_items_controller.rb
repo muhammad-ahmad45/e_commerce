@@ -15,9 +15,9 @@ class LineItemsController < ApplicationController
   end
 
   def update_quantity
+    byebug
     @line_item = LineItem.find(params[:id])
     new_quantity = params[:new_quantity].to_i
-    byebug
     if @line_item.update(quantity: new_quantity)
       render json: { success: true, new_quantity: new_quantity }
     else
@@ -34,7 +34,7 @@ class LineItemsController < ApplicationController
   private
 
   def line_item_params
-    params.require(:line_item).permit(:quantity)
+    params.require(:line_item).permit(:new_quantity)
   end
 
 end

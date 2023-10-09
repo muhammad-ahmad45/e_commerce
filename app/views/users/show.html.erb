@@ -12,7 +12,11 @@
         <td>  <%= @user.email %> </td>
         <td> 
           <%= button_to 'Edit', edit_user_path(@user), method: :get, class: "btn btn-primary" %>
-          <%= button_to 'Delete', user_path(@user), method: :delete, turbo_confirm: "Are you sure?", class: "btn btn-primary" %>  
+          <%= button_to 'Delete', user_path(@user), method: :delete, class: "btn btn-primary", form: { 
+            data: { 
+              turbo_confirm: "Are you sure you want delete user?"
+            }
+           } %>  
         </td>
       </tr>
   </tbody>

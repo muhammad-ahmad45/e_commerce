@@ -25,20 +25,20 @@
 
   <div class="row row-cols-2 row-cols-md-3 g-10 product-list">
     <% @products.each do |product| %>
-      <div class="col product-card">
+      <div class="col product-card", style:"border: 3px solid #000;">
         <div class="card">
-          <%= image_tag product.image, class: "card-img-top product-image" if product.image.attached? %>
+          <%= image_tag product.image, class: "card-img-top" if product.image.attached? %>
           <div class="card-body">
             <h5 class="card-title"><strong class='product-info-label'>Title:</strong> <%= product.title %></h5>
             <h5 class="card-title"><strong class='product-info-label'>Price:</strong> <%= product.price %> Rs</h5>
-            <h5 class="card-title"><strong class='product-info-label'>Total Quantity:</strong> <%= product.total_quantity %></h5>
-            <h5 class="card-title"><strong class='product-info-label'>Quantity in Stock:</strong> <%= product.quantity_in_stock %></h5>
             <p class="card-text"><strong class='product-info-label'>Description:</strong> <%= product.description %></p>
           </div>
           <div class="text-center">
-            <% if current_user.if_admin? %>
+            <% if current_user.if_admin? || current_user.has_staff? %>
               <%= button_to 'Edit', edit_product_path(product), method: :get, class: "btn btn-secondary action-button" %>
-              <%= button_to 'Delete', product_path(product), method: :delete, turbo_confirm: "Are you sure?", class: "btn btn-danger action-button" %>
+              <% if current_user.if_admin? %>
+                <%= button_to 'Delete', product_path(product), method: :delete, turbo_confirm: "Are you sure?", class: "btn btn-danger action-button" %>
+              <% end %>
             <% end %>
           </div>
           <div class="text-center">
@@ -53,11 +53,9 @@
   </div>
 
   <div class="row justify-content-center">
-    <% unless current_user.has_customer? %>
-      <% if current_user.if_admin? %>
+      <% if current_user.if_admin? || current_user.has_staff? %>
         <%= button_to "Add New Product", new_product_path, method: :get, class: "btn btn-primary action-button" %>
       <% end %>
-    <% end %>
     <%= button_to "Back", :back, method: :get, class: "btn btn-primary action-button" %>
   </div>
 

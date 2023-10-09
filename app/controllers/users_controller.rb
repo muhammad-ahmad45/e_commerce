@@ -13,10 +13,10 @@ class UsersController < ApplicationController
   end
 
   def edit; end
-
+  
   def update
-    if @user.update(user_params)
-      redirect_to root_path
+    if @user.update!(user_params)
+      redirect_to users_path
     else
       render :edit, status: :unprocessable_entity
     end
@@ -26,12 +26,12 @@ class UsersController < ApplicationController
 
   def destroy
     @user.destroy
-    redirect_to root_path, status: :see_other
+    redirect_to users_path, status: :see_other
   end 
 
    private
    def user_params
-     params.require(:user).permit(:email, :username, :password, :password_confirmation, role_ids: [])
+     params.require(:user).permit(:email, :username, :password, role_ids: [])
    end
 
    def get_user_params

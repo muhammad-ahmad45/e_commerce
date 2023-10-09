@@ -1,11 +1,18 @@
 class ProductsController < ApplicationController
 
   before_action :get_params, only: [:edit, :update, :destroy]
-
+  before_action :authenticate_user!
   def index
-    # byebug
-    # @products = Product.search(params).page(params[:page])
-    @products = Product.where("price >= ? AND price <= ? AND title LIKE ?", params[:price], params[:price], params[:title]).page(params[:page])
+    @products = Product.all.page(params[:page])
+    if params[:min_price].present?
+      @products = @products.where("price >= ?", params[:min_price]).page(params[:page])
+    elsif params[:max_price].present?
+      @products = @products.where("price <= ?", params[:max_price]).page(params[:page])
+    elsif params[:title].present?
+      @products = @products.where("title = ?", params[:title]).page(params[:page])
+    else
+      puts "No Result Found"
+    end
   end
 
   def new
