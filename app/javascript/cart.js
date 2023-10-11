@@ -56,9 +56,9 @@ $(document).on('turbo:load', function() {
   // Function to make an AJAX request to update the quantity
   
   function updateQuantity(lineItemId, newQuantity) {
-    lineItemId = parseInt(lineItemId);
+    lineItemId = parseInt(lineItemId); // Convert lineItemId to an integer
     $.ajax({
-      url: "<%= update_quantity_line_item_path(1) %>",
+      url: 'line_items/23/update_quantity',
       type: "PATCH",
       data: { new_quantity: newQuantity },
       success: function(response) {
