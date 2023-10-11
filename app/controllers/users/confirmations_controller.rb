@@ -5,4 +5,3 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
       root_path
     end
   end
-  

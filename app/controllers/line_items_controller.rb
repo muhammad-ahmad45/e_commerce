@@ -1,19 +1,5 @@
 class LineItemsController < ApplicationController
 
-  # def edit
-  #   @line_item = LineItem.find(params[:id])
-  # end
-  
-  # def update
-  #   @line_item = LineItem.find(params[:id])
-
-  #   if @line_item.update(line_item_params)
-  #     redirect_to user_cart_path(current_user, @line_item.cart)
-  #   else
-  #     render :edit, status: :unprocessable_entity
-  #   end
-  # end
-
   def update_quantity
     @line_item = LineItem.find(params[:id])
     new_quantity = params[:new_quantity].to_i
