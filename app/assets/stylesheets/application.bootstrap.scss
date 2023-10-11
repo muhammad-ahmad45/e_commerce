@@ -2,12 +2,12 @@
 @import 'bootstrap-icons/font/bootstrap-icons';
 
 .card-container {
-    width: 400px; /* Adjust the width as needed */
-    height: 50%; /* Adjust the height as needed */
+    width: 400px;
+    height: 50%; 
   }
   
   .product-image {
-    width: 400px; /* Make sure the image takes the full width of the container */
-    height: 400px; /* Adjust the height as needed */
-    object-fit: cover; /* This scales the image to cover the entire container while maintaining aspect ratio */
+    width: 400px;
+    height: 400px;
+    object-fit: cover;
   }

@@ -6,17 +6,10 @@ class CartsController < ApplicationController
     @product = Product.find(params[:product_id])
     @line_item = @cart.line_items.find_by(product: @product)
 
-    if @line_item
-      @line_item.increment(:quantity)
-    else
-      @line_item = @cart.line_items.build(product: @product, quantity: 1)
-    end
+    @line_item = @line_item ? @line_item.increment(:quantity) : @cart.line_items.build(product: @product, quantity: 1)
 
-    if @line_item.save
-      redirect_to user_cart_path(@cart), notice: "#{@product.title} added to cart."
-    else
-      render '/products'
-    end
+    @line_item.save ? (redirect_to user_cart_path(@cart), notice: "#{ @product.title } added to cart.") : (render '/products')
+    
   end
 
   def show; end
@@ -31,11 +24,7 @@ class CartsController < ApplicationController
   private
 
   def set_cart
-    if current_user.cart
-      @cart = current_user.cart
-    else  
-      @cart = current_user.create_cart
-    end 
+    @cart = current_user.cart ? current_user.cart : current_user.create_cart
   end
  
 end 

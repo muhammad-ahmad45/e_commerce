@@ -6,22 +6,21 @@
   </div>
 
   <div class="text-center">
-  <%= form_with(url: products_path, method: :get) do |form| %>
+    <%= form_with(url: products_path, method: :get) do |form| %>
+      <%= form.label :min_price, "<strong class='search-label input-group-text'>Enter Min Price:</strong>".html_safe, class: "input-group-prepend" %>
+      <%= form.text_field :min_price %>
 
-    <%= form.label :min_price, "<strong class='search-label input-group-text'>Enter Min Price:</strong>".html_safe, class: "input-group-prepend" %>
-    <%= form.text_field :min_price %>
+      <%= form.label :max_price, "<strong class='search-label input-group-text'>Enter Max Price:</strong>".html_safe, class: "input-group-prepend" %>
+      <%= form.text_field :max_price %>
 
-    <%= form.label :max_price, "<strong class='search-label input-group-text'>Enter Max Price:</strong>".html_safe, class: "input-group-prepend" %>
-    <%= form.text_field :max_price %>
-
-    <%= form.label :title, "<strong class='search-label input-group-text'>Search by Title:</strong>".html_safe, class: "input-group-prepend" %>
-    <%= form.text_field :title %>
-    
-    <div class="field">
-      <%= form.submit 'Search', class: "btn btn-primary search-button"  %>
-    </div> <br>
-  <% end %>
-</div>
+      <%= form.label :title, "<strong class='search-label input-group-text'>Search by Title:</strong>".html_safe, class: "input-group-prepend" %>
+      <%= form.text_field :title %>
+      
+      <div class="field">
+        <%= form.submit 'Search', class: "btn btn-primary search-button"  %>
+      </div> <br>
+    <% end %>
+  </div>
 
   <div class="row row-cols-2 row-cols-md-3 g-10 product-list">
     <% @products.each do |product| %>
@@ -53,9 +52,9 @@
   </div>
 
   <div class="row justify-content-center">
-      <% if current_user.if_admin? || current_user.has_staff? %>
-        <%= button_to "Add New Product", new_product_path, method: :get, class: "btn btn-primary action-button" %>
-      <% end %>
+    <% if current_user.if_admin? || current_user.has_staff? %>
+      <%= button_to "Add New Product", new_product_path, method: :get, class: "btn btn-primary action-button" %>
+    <% end %>
     <%= button_to "Back", :back, method: :get, class: "btn btn-primary action-button" %>
   </div>
 

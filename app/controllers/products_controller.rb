@@ -2,6 +2,7 @@ class ProductsController < ApplicationController
 
   before_action :get_params, only: [:edit, :update, :destroy]
   before_action :authenticate_user!
+  
   def index
     @products = Product.all.page(params[:page])
     if params[:min_price].present?
