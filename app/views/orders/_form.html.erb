@@ -1,0 +1,22 @@
+<%= form_with model: order do |form| %>
+    <div>
+      <%= form.label :address %><br>
+      <%= form.text_field :address %>
+      <% order.errors.full_messages_for(:address).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+    
+    <div>
+      <%= form.label :total_bill %><br>
+      <%= form.text_area :total_bill %><br>
+      <% order.errors.full_messages_for(:total_bill).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div> <br>
+
+    <div>
+      <%= form.submit %>
+    </div>
+
+  <% end %>

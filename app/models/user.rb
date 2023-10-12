@@ -9,7 +9,6 @@ class User < ApplicationRecord
   has_one :cart
   SPECIAL_CHARACTERS = /.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\].*/
   validates :password, format: { with: SPECIAL_CHARACTERS  , message: "must include at least one special character"} ,on: :create
-  # validates :password_confirmation, presence: { message: " field is empty" }
 
   def if_admin?
       self.roles.exists?(user_role: 'admin')
