@@ -1,9 +1,9 @@
 <div class="col-lg-4 mx-auto">
   <h1>Welcome to our website!</h1>
-  <div class="col-lg-4 mx-auto">
-    <h2>All Users</h2>
-  </div>
 </div>  
+<div class="text-center">
+  <h2>All Users</h2>
+</div>
 <br>
 <table class="table table-bordered" style="border-width:4px">
   <thead>
@@ -31,8 +31,12 @@
     <% end %> 
   </tbody>
 </table>
-<%= button_to 'Show Products', products_path, method: :get, class: "btn btn-primary"%>
-
+<div class="text-center">
+  <%= button_to 'Show Products', products_path, method: :get, class: "btn btn-primary"%>
+</div>
 <br>
-<%= paginate @users %>
+<div class="text-center">
+  <%= paginate @users %>
+</div>
+
 

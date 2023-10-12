@@ -6,13 +6,32 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
+      <%if current_user && current_user.if_admin? %>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/">Home</a>
+          <a class="nav-link active" aria-current="page" href="/users">Users</a>
         </li>
+      <% end %>  
         <li class="nav-item">
-          <a class="nav-link" href="products#index">Products</a>
+          <a class="nav-link" href="/products">Products</a>
         </li>
       </ul>
     </div>
+    <ul class="navbar-nav ml-auto">
+      <% if user_signed_in? %>
+        <li class="nav-item">
+          <h3 class="nav-link">Welcome, as <%= current_user.email %>!</h3>
+        </li>
+        <li class="nav-item">
+          <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "btn btn-dark" %>
+        </li>
+      <% else %>
+        <li class="nav-item">
+          <%= button_to "Sign In", new_user_session_path, method: :get, class: "btn btn-dark" %>
+        </li>
+        <li class="nav-item">
+          <%= button_to "Sign Up", new_user_registration_path, method: :get, class: "btn btn-dark" %>
+        </li>
+      <% end %>
+    </ul>
   </div>
 </nav>

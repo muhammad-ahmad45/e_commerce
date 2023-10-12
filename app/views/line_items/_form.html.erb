@@ -1,0 +1,15 @@
+<%= form_with model: line_item do |form| %>
+  <div>
+    <%= form.label :quantity %><br>
+    <%= form.text_field :quantity  %><br>
+    <% line_item.errors.full_messages_for(:quantity).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+<br>
+
+  <div>
+    <%= form.submit %>
+  </div>
+
+<% end %>

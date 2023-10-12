@@ -1,15 +1,25 @@
 Rails.application.routes.draw do
-  root to: 'users#index'
+
+  root to: 'products#index'
   
   devise_for :users, controllers: {
-    session: 'users/sessions',
-    registrations: 'users/registrations'
+    registrations: 'users/registrations',
+    confirmations: 'users/confirmations', 
+    session: 'users/sessions'
   }
   
+  resources :products
+
   resources :users do
     resources :roles
-    end
+    resource :cart, except: [:edit]
+    post '/carts/add_to_cart/:product_id', to: 'carts#add_to_cart', as: 'add_to_cart'
+    get '/carts/edit/:line_item_id', to: 'line_items#edit', as: 'edit_line_item'
+    patch 'line_items/:id/update_quantity', to: 'line_items#update_quantity', as: :update_quantity_line_item
 
-  resources :products
+  end
+  
+  resources :line_items, only: [:update, :edit, :destroy] 
+
 
 end

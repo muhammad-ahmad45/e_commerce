@@ -1,37 +1,62 @@
-<h1>Products</h1>
-<%= form_with(url: products_path, method: :get) do |form| %>
-  <%= form.label :price, "<strong>Search by Price:</strong>".html_safe %>
-  <%= form.text_field :price, placeholder: 'Search products by price...' %>
-
-  <%= form.label :quantity, "<strong>Search by Total Quantity:</strong>".html_safe %>
-  <%= form.text_field :quantity, placeholder: 'Search products by quantity...' %>
-
-  <div class="field">
-    <%= form.submit 'Search' %>
-  </div> <br>
-<% end %>
-
-<ul>
-  <% @products.each do |product| %>
-    <div>
-      <% if product.image.attached? %>
-        <%= image_tag product.image %>
-      <% end %>
-      <p> <strong> Title: </strong> <%= product.title %>  </p>
-      <p> <strong> Description: </strong> <%= product.description %>  </p>
-      <p> <strong> Price: </strong> <%= product.price %>  </p>
-      <p> <strong> Totalquantity: </strong> <%= product.total_quantity %>  </p>
-      <p> <strong> Quantity in stock: </strong> <%= product.quantity_in_stock %>  </p>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-3 mx-auto text-center">
+      <h1 class="page-title">Products</h1>
     </div>
-    
-    <p>
-      <%= button_to 'Edit', edit_product_path(product), method: :get %>
-      <%= button_to 'Delete', product_path(product), method: :delete, turbo_confirm: "Are you sure?" %>
-    </p>
+  </div>
+
+  <div class="text-center">
+    <%= form_with(url: products_path, method: :get) do |form| %>
+      <%= form.label :min_price, "<strong class='search-label input-group-text'>Enter Min Price:</strong>".html_safe, class: "input-group-prepend" %>
+      <%= form.text_field :min_price %>
+
+      <%= form.label :max_price, "<strong class='search-label input-group-text'>Enter Max Price:</strong>".html_safe, class: "input-group-prepend" %>
+      <%= form.text_field :max_price %>
+
+      <%= form.label :title, "<strong class='search-label input-group-text'>Search by Title:</strong>".html_safe, class: "input-group-prepend" %>
+      <%= form.text_field :title %>
+      
+      <div class="field">
+        <%= form.submit 'Search', class: "btn btn-primary search-button"  %>
+      </div> <br>
     <% end %>
+  </div>
 
-</ul>
+  <div class="row row-cols-2 row-cols-md-3 g-10 product-list">
+    <% @products.each do |product| %>
+      <div class="col product-card", style:"border: 3px solid #000;">
+        <div class="card">
+          <%= image_tag product.image, class: "card-img-top" if product.image.attached? %>
+          <div class="card-body">
+            <h5 class="card-title"><strong class='product-info-label'>Title:</strong> <%= product.title %></h5>
+            <h5 class="card-title"><strong class='product-info-label'>Price:</strong> <%= product.price %> Rs</h5>
+            <p class="card-text"><strong class='product-info-label'>Description:</strong> <%= product.description %></p>
+          </div>
+          <div class="text-center">
+            <% if current_user.if_admin? || current_user.has_staff? %>
+              <%= button_to 'Edit', edit_product_path(product), method: :get, class: "btn btn-secondary action-button" %>
+              <% if current_user.if_admin? %>
+                <%= button_to 'Delete', product_path(product), method: :delete, turbo_confirm: "Are you sure?", class: "btn btn-danger action-button" %>
+              <% end %>
+            <% end %>
+          </div>
+          <div class="text-center">
+            <% if current_user.has_customer? %>
+              <%= button_to 'Add to Cart', user_add_to_cart_path(current_user, product_id: product.id), class: "btn btn-success action-button" %>
+              <%= button_to 'Show My Cart', user_cart_path(current_user), method: :get, class: "btn btn-info action-button" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
 
-<%= button_to "Add New Product", new_product_path, method: :get %> 
-<%= button_to "Back", :back, method: :get, class: "btn btn-primary" %> <br>
-<%= paginate @products %>
+  <div class="row justify-content-center">
+    <% if current_user.if_admin? || current_user.has_staff? %>
+      <%= button_to "Add New Product", new_product_path, method: :get, class: "btn btn-primary action-button" %>
+    <% end %>
+    <%= button_to "Back", :back, method: :get, class: "btn btn-primary action-button" %>
+  </div>
+
+  <%= paginate @products %>
+</div>
