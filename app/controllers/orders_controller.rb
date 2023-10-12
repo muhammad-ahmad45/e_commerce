@@ -10,8 +10,8 @@ class OrdersController < ApplicationController
     @order = @cart.build_order(order_params)
     @order.user = current_user
     if @order.save
+      OrderMailer.confirmation_email(@order).deliver_now
       redirect_to order_path(@order)
-      @order.cart
     else
       render :new
     end
