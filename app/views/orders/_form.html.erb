@@ -1,22 +1,50 @@
-<%= form_with model: order do |form| %>
-    <div>
-      <%= form.label :address %><br>
-      <%= form.text_field :address %>
-      <% order.errors.full_messages_for(:address).each do |message| %>
-        <div><%= message %></div>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6 order-md-2" style="border: 2px solid #000; padding: 20px;">
+      <%= form_with model: order do |form| %>
+        <h3>Add your information</h3>
+        <div>
+          <h5><%= form.label :address %></h5>
+          <%= form.text_field :address, class: "form-control" %>
+          <% order.errors.full_messages_for(:address).each do |message| %>
+            <div><%= message %></div>
+          <% end %>
+        </div>
+      
+        <div>
+          <%= form.hidden_field :total_bill, value: current_user.cart.line_items.sum(:total_price) %>
+        </div> <br>
+        
+        <div class="text-center">
+          <%= form.submit 'Place Order', class: 'btn btn-primary' %>
+        </div>
       <% end %>
     </div>
     
-    <div>
-      <%= form.label :total_bill %><br>
-      <%= form.text_area :total_bill %><br>
-      <% order.errors.full_messages_for(:total_bill).each do |message| %>
-        <div><%= message %></div>
-      <% end %>
-    </div> <br>
-
-    <div>
-      <%= form.submit %>
+    <div class="col-md-6 order-md-4" style="border: 2px solid #000; padding: 20px;">
+      <div class="text-center">
+        <h3>Cart Summary</h3>
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Total Price(Rs)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% current_user.cart.line_items.each do |line_item| %>
+            <tr>
+              <td><%= line_item.product.title %></td>
+              <td><%= line_item.quantity %></td>
+              <td><%= line_item.total_price %></td>
+            </tr>
+          <% end %> <br>
+        </tbody>
+      </table>
+      <strong>Your Total bill:</strong>
+      <%= current_user.cart.line_items.sum(:total_price) %>
     </div>
-
-  <% end %>
+  </div>
+</div>

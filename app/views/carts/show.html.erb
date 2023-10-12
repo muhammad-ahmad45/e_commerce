@@ -24,9 +24,9 @@
               <strong>Unit Price: </strong>
               <%= line_item.product.price %>
             </p>
-            <% bill = line_item.product.price * line_item.quantity %>
             <p class="card-text">
               <strong>Total Price: </strong>
+              <% bill = line_item.total_price %>
               <%= bill %>
               <% total_bill += bill %>
             </p>
