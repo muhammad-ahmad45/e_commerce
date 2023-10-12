@@ -1,0 +1,29 @@
+<div class="text-center">
+  <h1>All Orders</h1>
+</div>
+<div class="text-center">
+  <table class="table table-bordered table-lg center">
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Address</th>
+        <th>Total Bill</th>
+        <th>User ID</th>
+        <th>User Name</th>
+        <th>User Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @orders.each do |order| %>
+        <tr>
+          <td><%= order.id %></td>
+          <td><%= order.address %></td>
+          <td><%= order.total_bill %> Rs</td>
+          <td><%= order.cart.user.id %></td>
+          <td><%= order.cart.user.username %></td>
+          <td><%= order.cart.user.email %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

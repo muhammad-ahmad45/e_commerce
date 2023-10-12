@@ -6,11 +6,14 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
-      <%if current_user && current_user.if_admin? %>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/users">Users</a>
-        </li>
-      <% end %>  
+        <%if current_user && current_user.if_admin? %>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/users">Users</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/orders">All Orders</a>
+          </li>
+        <% end %>
         <li class="nav-item">
           <a class="nav-link" href="/products">Products</a>
         </li>
