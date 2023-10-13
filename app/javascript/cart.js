@@ -58,7 +58,7 @@ $(document).on('turbo:load', function() {
   function updateQuantity(lineItemId, newQuantity) {
     lineItemId = parseInt(lineItemId); // Convert lineItemId to an integer
     $.ajax({
-      url: 'line_items/23/update_quantity',
+      url: 'line_items/52/update_quantity',
       type: "PATCH",
       data: { new_quantity: newQuantity },
       success: function(response) {

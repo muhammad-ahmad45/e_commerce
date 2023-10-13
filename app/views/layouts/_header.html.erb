@@ -17,6 +17,11 @@
         <li class="nav-item">
           <a class="nav-link" href="/products">Products</a>
         </li>
+        <%if current_user && (current_user.if_admin? || current_user.has_staff?) %>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/products/new">Add Product</a>
+          </li>
+        <% end %>
       </ul>
     </div>
     <ul class="navbar-nav ml-auto">

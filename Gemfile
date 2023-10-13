@@ -79,3 +79,5 @@ gem 'kaminari'
 gem "devise", "~> 4.9"
 
 gem 'bootstrap'
+
+gem 'font-awesome-rails'

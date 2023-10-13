@@ -13,8 +13,12 @@
       
         <div>
           <%= form.hidden_field :total_bill, value: current_user.cart.line_items.sum(:total_price) %>
-        </div> <br>
+        </div>
         
+        <div>
+          <%= form.hidden_field :status, value: 'dispatched' %>
+        </div>
+
         <div class="text-center">
           <%= form.submit 'Place Order', class: 'btn btn-primary' %>
         </div>

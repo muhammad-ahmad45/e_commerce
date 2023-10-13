@@ -1,16 +1,17 @@
 <div class="text-center">
   <h1>All Orders</h1>
-</div>
+</div>  <br>
 <div class="text-center">
   <table class="table table-bordered table-lg center">
     <thead>
       <tr>
-        <th>Order ID</th>
-        <th>Address</th>
-        <th>Total Bill</th>
-        <th>User ID</th>
-        <th>User Name</th>
-        <th>User Email</th>
+       <th> <h5> Order ID </h5> </th>
+       <th> <h5> Address </h5> </th> 
+      <th> <h5> Total Bill </h5> </th>
+      <th> <h5> User ID </h5> </th>
+      <th> <h5> User Name </h5> </th>
+      <th> <h5> User Email </h5> </th>
+      <th> <h5> Order Status  </h5> </th> 
       </tr>
     </thead>
     <tbody>
@@ -19,9 +20,10 @@
           <td><%= order.id %></td>
           <td><%= order.address %></td>
           <td><%= order.total_bill %> Rs</td>
-          <td><%= order.cart.user.id %></td>
-          <td><%= order.cart.user.username %></td>
-          <td><%= order.cart.user.email %></td>
+          <td><%= order.user.id %></td>
+          <td><%= order.user.username %></td>
+          <td><%= order.user.email %></td>
+          <td><%= render 'update_status', order: order %></td>
         </tr>
       <% end %>
     </tbody>

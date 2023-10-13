@@ -1,0 +1,12 @@
+<%= form_for order, url: { controller: 'orders', action: 'update', id: order.id }, method: :patch do |form| %>
+
+  <h5>
+    Current Status: 
+    <%= form.select :status, ['dispatched', 'delivered', 'cancelled'], selected: order.status %>
+  </h5>
+
+  <p> 
+    <%= form.submit 'Change status' %>
+  </p>
+
+<% end %>
