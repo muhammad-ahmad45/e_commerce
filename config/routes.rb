@@ -21,4 +21,10 @@ Rails.application.routes.draw do
   resources :line_items, only: [:update, :edit, :destroy] 
   resources :orders
 
+  namespace :api do
+    namespace :v1 do
+      get 'products/index'
+    end
+  end
+
 end

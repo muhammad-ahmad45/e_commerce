@@ -1,7 +1,6 @@
 class LineItemsController < ApplicationController
 
   def update_quantity
-    byebug
     @line_item = LineItem.find(params[:id])
     new_quantity = params[:new_quantity].to_i
     if @line_item.update(quantity: new_quantity)

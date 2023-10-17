@@ -24,8 +24,9 @@ class User < ApplicationRecord
     self.roles.exists?(user_role: 'staff')
   end
 
-  def assign_default_customer 
-    self.permissions.build(role_id: Role.where(user_role: 'customer').first.id)
+  def assign_default_customer
+    customer_role = Role.find_by(user_role: 'customer')
+    self.permissions.build(role_id: customer_role&.id)
   end
 
 end

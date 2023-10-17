@@ -1,48 +1,49 @@
-<%= form_with model: product do |form| %>
-    <div>
-      <%= form.label :title %><br>
-      <%= form.text_field :title %>
+<div class="container d-flex justify-content-center align-items-center">
+  <%= form_with model: product, html: { class: 'custom-form' } do |form| %>
+    <div class="form-group">
+    <h5>  <%= form.label :title %>  </h5>
+      <%= form.text_field :title, class: 'form-control form-control-lg' %>
       <% product.errors.full_messages_for(:title).each do |message| %>
-        <div><%= message %></div>
+        <div class="text-danger"><%= message %></div>
       <% end %>
     </div>
     
-    <div>
-      <%= form.label :description %><br>
-      <%= form.text_area :description %><br>
+    <div class="form-group">
+    <h5> <%= form.label :description %> </h5>
+      <%= form.text_area :description, class: 'form-control form-control-lg' %>
       <% product.errors.full_messages_for(:description).each do |message| %>
-        <div><%= message %></div>
+        <div class="text-danger"><%= message %></div>
       <% end %>
     </div>
     
-    <div>
-      <%= form.label :price %><br>
-      <%= form.text_field :price %><br>
+    <div class="form-group">
+    <h5> <%= form.label :price %> </h5>
+      <%= form.text_field :price, class: 'form-control form-control-lg' %>
       <% product.errors.full_messages_for(:price).each do |message| %>
-        <div><%= message %></div>
+        <div class="text-danger"><%= message %></div>
       <% end %>
     </div>
 
-    <div>
-      <%= form.label :total_quantity %><br>
-      <%= form.text_field :total_quantity %><br>
+    <div class="form-group">
+    <h5> <%= form.label :total_quantity %>  </h5>
+      <%= form.text_field :total_quantity, class: 'form-control form-control-lg' %>
       <% product.errors.full_messages_for(:total_quantity).each do |message| %>
-        <div><%= message %></div>
+        <div class="text-danger"><%= message %></div>
       <% end %>
     </div>
 
-    <div>
-      <%= form.label :quantity_in_stock %><br>
-      <%= form.text_field :quantity_in_stock %><br>
+    <div class="form-group">
+    <h5> <%= form.label :quantity_in_stock %> </h5>
+      <%= form.text_field :quantity_in_stock, class: 'form-control form-control-lg' %>
       <% product.errors.full_messages_for(:quantity_in_stock).each do |message| %>
-        <div><%= message %></div>
+        <div class="text-danger"><%= message %></div>
       <% end %>
     </div>
-     <%= render 'image_preview', form: form, product: product%>   
-     <br>
 
-    <div>
-      <%= form.submit %>
+    <%= render 'image_preview', form: form, product: product %>
+
+    <div class="form-group">
+      <%= form.submit 'Submit', class: 'btn btn-primary btn-lg' %>
     </div>
-
   <% end %>
+</div>

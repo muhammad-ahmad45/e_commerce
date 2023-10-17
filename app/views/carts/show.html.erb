@@ -1,15 +1,16 @@
 <div class="text-center">
   <h1>Shopping Cart</h1>
-</div>  <br>
-<% total_bill = 0%> 
-<div class="container d-flex flex-column align-items-center justify-content-center">
+</div>
+<br>
+<% total_bill = 0 %>
+<div class="container">
   <% @cart.line_items.each do |line_item| %>
-    <div class="card mb-3" style="width: 1000px; height: 200px; border: 3px solid #000; overflow: hidden;">
+    <div class="card mb-2">
       <div class="row g-0">
-        <div class="col-md-4">
+        <div class="col-md-2">
           <% if line_item.product.image.attached? %>
-            <div class="image-container" style="height: 200px; width: 200px;">
-              <%= image_tag line_item.product.image, class: "img-fluid h-100 object-fit-cover" %>
+            <div class="image-container">
+              <%= image_tag line_item.product.image, class: "img-fluid" %>
             </div>
           <% end %>
         </div>
@@ -48,18 +49,19 @@
       </div>
     </div>
   <% end %>
-</div> <br>
+</div>
+<br>
 <div class="text-center">
   <h4>Your total bill is: <%= total_bill %> Rs </h4>
-</div> <br>
+</div>
+<br>
 <div class="d-flex justify-content-center align-items-center mt-3">
   <%= button_to 'Remove All Items', user_cart_path(current_user, cart_id: @cart.id), method: :delete, class: "btn btn-danger", form: { 
     data: { 
-      turbo_confirm: "Are you sure you want remove all items from cart?"
+      turbo_confirm: "Are you sure you want to remove all items from the cart?"
     }
    } %>
    
    <%= button_to "Check Out", new_order_path(@cart), method: :get, class: "btn btn-primary" %>
-
 </div>
 <%= button_to "Back", :back, method: :get, class: "btn btn-primary" %>
