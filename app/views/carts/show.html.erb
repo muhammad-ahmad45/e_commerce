@@ -55,13 +55,15 @@
   <h4>Your total bill is: <%= total_bill %> Rs </h4>
 </div>
 <br>
-<div class="d-flex justify-content-center align-items-center mt-3">
-  <%= button_to 'Remove All Items', user_cart_path(current_user, cart_id: @cart.id), method: :delete, class: "btn btn-danger", form: { 
-    data: { 
-      turbo_confirm: "Are you sure you want to remove all items from the cart?"
-    }
-   } %>
-   
-   <%= button_to "Check Out", new_order_path(@cart), method: :get, class: "btn btn-primary" %>
-</div>
+<% if @cart.line_items.present? %> 
+  <div class="d-flex justify-content-center align-items-center mt-3">
+    <%= button_to 'Remove All Items', user_cart_path(current_user, cart_id: @cart.id), method: :delete, class: "btn btn-danger", form: { 
+      data: { 
+        turbo_confirm: "Are you sure you want to remove all items from the cart?"
+      }
+    } %>
+    
+    <%= button_to "Check Out", new_order_path(@cart), method: :get, class: "btn btn-primary" %>
+  </div>
+<% end %>
 <%= button_to "Back", :back, method: :get, class: "btn btn-primary" %>
