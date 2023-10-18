@@ -7,12 +7,12 @@ class User < ApplicationRecord
   has_many :permissions, dependent: :destroy
   has_many :roles, through: :permissions , dependent: :destroy
   has_one :cart
-  has_many :orders
+  has_many :orders, dependent: :destroy
 
   SPECIAL_CHARACTERS = /.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\].*/
   validates :password, format: { with: SPECIAL_CHARACTERS  , message: "must include at least one special character"} ,on: :create
 
-  def if_admin?
+  def is_admin?
       self.roles.exists?(user_role: 'admin')
   end
 
@@ -26,7 +26,9 @@ class User < ApplicationRecord
 
   def assign_default_customer
     customer_role = Role.find_by(user_role: 'customer')
-    self.permissions.build(role_id: customer_role&.id)
+    if customer_role
+      self.permissions.build(role_id: customer_role&.id)
+    end
   end
 
 end

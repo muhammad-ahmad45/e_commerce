@@ -1,4 +1,4 @@
-<%= form_for order, url: { controller: 'orders', action: 'update', id: order.id }, method: :patch do |form| %>
+<%= form_for order, url: order_path(order), method: :patch do |form| %>
 
   <h5>
     Current Status: 

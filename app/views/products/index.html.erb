@@ -33,9 +33,9 @@
             <p class="card-text"><strong class='product-info-label'>Description:</strong> <%= product.description %></p>
           </div>
           <div class="text-center">
-            <% if current_user.if_admin? || current_user.has_staff? %>
+            <% if current_user.is_admin? || current_user.has_staff? %>
               <%= button_to 'Edit', edit_product_path(product), method: :get, class: "btn btn-secondary action-button" %>
-              <% if current_user.if_admin? %>
+              <% if current_user.is_admin? %>
                 <%= button_to 'Delete', product_path(product), method: :delete, turbo_confirm: "Are you sure?", class: "btn btn-danger action-button" %>
               <% end %>
             <% end %>

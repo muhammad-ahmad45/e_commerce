@@ -1,5 +1,8 @@
 class OrdersController < ApplicationController
   
+  before_action :get_order, only: [:show, :update]
+  after_action :send_email_and_clear_cart, only: [:create]
+
   def index
     @orders = Order.all
   end
@@ -14,34 +17,39 @@ class OrdersController < ApplicationController
     @order.cart = @cart
     @order.user = current_user
     if @order.save
-      OrderMailer.confirmation_email(@order).deliver_now
       redirect_to order_path(@order)
-      @cart.line_items.destroy_all
     else
       render :new
     end
   end
 
   def update
-    @order = Order.find(params[:id])
     if @order.update(update_params)
-      redirect_to orders_path, method: :get, notice: "Status of Order #{@order.id} is updated successfully."
+      redirect_to orders_path, notice: "Status of Order #{@order.id} is updated successfully."
     else
       render :index, status: :unprocessable_entity
     end
   end
 
-  def show
-    @order = Order.find(params[:id])
-  end
+  def show; end
 
   private
 
   def order_params
-    params.require(:order).permit(:address, :total_bill, :status)
+    params.require(:order).permit(:address, :total_bill)
   end
 
   def update_params
     params.require(:order).permit(:status)
   end
+
+  def get_order
+    @order = Order.find(params[:id])
+  end
+
+  def send_email_and_clear_cart
+    OrderMailer.confirmation_email(@order).deliver_now
+    @cart.line_items.destroy_all
+  end
+
 end
