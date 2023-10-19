@@ -1,4 +1,4 @@
-<div class="col-lg-4 mx-auto">
+<div class="text-center">
   <h1>Welcome to our website!</h1>
 </div>  
 <div class="text-center">
@@ -35,8 +35,10 @@
   <%= button_to 'Show Products', products_path, method: :get, class: "btn btn-primary"%>
 </div>
 <br>
-<div class="text-center">
-  <%= paginate @users %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 d-flex justify-content-center">
+      <%= paginate @users %>
+    </div>
+  </div>
 </div>
-
-

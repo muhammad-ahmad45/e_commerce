@@ -21,10 +21,10 @@
       </tr>
   </tbody>
 </table>  <br>
-<h6>Assigned Roles</h6>
-<% @user.roles.each do |role| %>
+<h5>Assigned Roles</h5>
+<b> <% @user.roles.each do |role| %>
   <ul>
     <li> <%= role.user_role %> </li>
   </ul>  
-<% end %>
+<% end %> </b>
 <%= button_to "Back", :back, method: :get, class: "btn btn-primary" %>

@@ -5,10 +5,12 @@ class OrdersController < ApplicationController
 
   def index
     @orders = Order.all
+    @orders.includes(:user)
   end
   
   def new
     @order = Order.new
+    Cart.where(user_id: current_user.id).includes(:line_items).first
   end
 
   def create

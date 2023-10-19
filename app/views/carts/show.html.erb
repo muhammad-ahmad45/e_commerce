@@ -23,13 +23,11 @@
             </p>
             <p class="card-text">
               <strong>Unit Price: </strong>
-              <%= line_item.product.price %>
+              <span class="unit-price" data-line-item-id="<%= line_item.id %>"><%= line_item.product.price %></span>
             </p>
             <p class="card-text">
               <strong>Total Price: </strong>
-              <% bill = line_item.total_price %>
-              <%= bill %>
-              <% total_bill += bill %>
+              <span class="total" data-line-item-id="<%= line_item.id %>"><%= line_item.total_price %></span>
             </p>
           </div>
         </div>
@@ -41,9 +39,9 @@
           <div class="text-right p-3">
             <%= button_to 'Remove', line_item_path(line_item), method: :delete, class: "btn btn-danger", form: { 
               data: { 
-                turbo_confirm: "Are you sure you want to remove this item from cart?"
+                turbo_confirm: "Are you sure you want to remove this item from the cart?"
               }
-             } %>
+            } %>
           </div>
         </div>
       </div>
@@ -52,7 +50,7 @@
 </div>
 <br>
 <div class="text-center">
-  <h4>Your total bill is: <%= total_bill %> Rs </h4>
+  <h4>Your total bill is: <span id="total-bill"><%= total_bill %> Rs</span></h4>
 </div>
 <br>
 <% if @cart.line_items.present? %> 
@@ -62,7 +60,6 @@
         turbo_confirm: "Are you sure you want to remove all items from the cart?"
       }
     } %>
-    
     <%= button_to "Check Out", new_order_path(@cart), method: :get, class: "btn btn-primary" %>
   </div>
 <% end %>

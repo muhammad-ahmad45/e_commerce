@@ -7,7 +7,7 @@ $(document).on('turbo:load', function() {
     $('.table tbody tr').each(function() {
       var row = $(this);
       var quantity = parseInt(row.find('.quantity').text());
-      var unitPrice = parseFloat(row.find('td:eq(2)').text());
+      var unitPrice = parseFloat(row.find('.unit-price').text());
 
       // Calculate the total price for this row
       var totalRowPrice = quantity * unitPrice;
@@ -30,11 +30,16 @@ $(document).on('turbo:load', function() {
     var newQuantity = parseInt(quantityElement.text()) + 1;
     quantityElement.text(newQuantity);
 
-    // Update the total bill
-    updateTotalBill();
-    
+    // Update the total price for this line item
+    var unitPrice = parseFloat($('.unit-price[data-line-item-id="' + lineItemId + '"]').text());
+    var totalRowPrice = newQuantity * unitPrice;
+    $('.total[data-line-item-id="' + lineItemId + '"]').text(totalRowPrice);
+
     // Make an AJAX request to update the quantity in the database
     updateQuantity(lineItemId, newQuantity);
+
+    // Recalculate and update the total bill
+    updateTotalBill();
   });
 
   // Handle the click event for the "-" button
@@ -46,37 +51,48 @@ $(document).on('turbo:load', function() {
     var newQuantity = Math.max(parseInt(quantityElement.text()) - 1, 1);
     quantityElement.text(newQuantity);
 
-    // Update the total bill
-    updateTotalBill();
+    // Update the total price for this line item
+    var unitPrice = parseFloat($('.unit-price[data-line-item-id="' + lineItemId + '"]').text());
+    var totalRowPrice = newQuantity * unitPrice;
+    $('.total[data-line-item-id="' + lineItemId + '"]').text(totalRowPrice);
 
     // Make an AJAX request to update the quantity in the database
     updateQuantity(lineItemId, newQuantity);
+
+    // Recalculate and update the total bill
+    updateTotalBill();
   });
 
-  // Function to make an AJAX request to update the quantity
-  
-  function updateQuantity(lineItemId, newQuantity) {
-    lineItemId = parseInt(lineItemId); // Convert lineItemId to an integer
-    $.ajax({
-      url: 'line_items/52/update_quantity',
-      type: "PATCH",
-      data: { new_quantity: newQuantity },
-      success: function(response) {
-        if (response.success) {
-          // Quantity updated successfully
-          console.log('Quantity updated in the database:', response.new_quantity);
-        } else {
-          // Handle errors
-          console.error('Error updating quantity:', response.errors);
-        }
-      },
-      error: function() {
-        // Handle AJAX error
-        console.error('AJAX request failed');
-      }
-    });
-  }
 
+//Add header
+$.ajaxSetup({
+  headers: {
+    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+  }
+});
+
+// Function to make an AJAX request to update the quantity
+function updateQuantity(lineItemId, newQuantity) {
+  lineItemId = parseInt(lineItemId); // Convert lineItemId to an integer
+  $.ajax({
+    url: 'line_items/' + lineItemId + '/update_quantity',
+    type: "PATCH",
+    data: { new_quantity: newQuantity },
+    success: function(response) {
+      if (response.success) {
+        // Quantity updated successfully
+        console.log('Quantity updated in the database:', response.new_quantity);
+      } else {
+        // Handle errors
+        console.error('Error updating quantity:', response.errors);
+      }
+    },
+    error: function() {
+      // Handle AJAX error
+      console.error('AJAX request failed');
+    }
+  });
+}
   // Initial calculation of total bill when the page loads
   updateTotalBill();
 });
