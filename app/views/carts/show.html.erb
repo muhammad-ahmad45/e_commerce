@@ -6,11 +6,11 @@
 <div class="container">
   <% @cart.line_items.each do |line_item| %>
     <div class="card mb-2">
-      <div class="row g-0">
+      <div class="row g-0" style="border: 3px solid #000;">
         <div class="col-md-2">
           <% if line_item.product.image.attached? %>
             <div class="image-container">
-              <%= image_tag line_item.product.image, class: "img-fluid" %>
+              <%= image_tag line_item.product.image, class: "img-fluid", style: "max-height: 200px; max-width: 100%; object-fit: contain;" %>
             </div>
           <% end %>
         </div>
@@ -23,27 +23,28 @@
             </p>
             <p class="card-text">
               <strong>Unit Price: </strong>
-              <%= line_item.product.price %>
+              <span class="unit-price" data-line-item-id="<%= line_item.id %>"><%= line_item.product.price %></span>
             </p>
             <p class="card-text">
               <strong>Total Price: </strong>
-              <% bill = line_item.total_price %>
-              <%= bill %>
-              <% total_bill += bill %>
+              <span class="total" data-line-item-id="<%= line_item.id %>"><%= line_item.total_price %></span>
+              <% total_bill += line_item.total_price %>
             </p>
           </div>
         </div>
         <div class="col-md-2">
           <div class="text-right p-3">
-            <button class="increase-quantity btn btn-primary" data-line-item-id="<%= line_item.id %>">+</button>
-            <button class="decrease-quantity btn btn-primary" data-line-item-id="<%= line_item.id %>">-</button>
+            <button class="increase-quantity btn btn-primary" data-line-item-id="<%= line_item.id %>"><h5> + </h5></button>
+            <button class="decrease-quantity btn btn-primary" data-line-item-id="<%= line_item.id %>"><h5> - </h5></button>
           </div>
           <div class="text-right p-3">
-            <%= button_to 'Remove', line_item_path(line_item), method: :delete, class: "btn btn-danger", form: { 
-              data: { 
-                turbo_confirm: "Are you sure you want to remove this item from cart?"
-              }
-             } %>
+          <%= button_to line_item_path(line_item), method: :delete, class: "btn btn-danger", form: { 
+            data: { 
+              turbo_confirm: "Are you sure you want to remove this item from the cart?"
+            }
+          } do %>
+            <i class="bi bi-trash"></i>
+          <% end %>
           </div>
         </div>
       </div>
@@ -52,16 +53,17 @@
 </div>
 <br>
 <div class="text-center">
-  <h4>Your total bill is: <%= total_bill %> Rs </h4>
+  <h4>Your total bill is: <span id="total-bill"><%= total_bill %> Rs</span></h4>
 </div>
 <br>
-<div class="d-flex justify-content-center align-items-center mt-3">
-  <%= button_to 'Remove All Items', user_cart_path(current_user, cart_id: @cart.id), method: :delete, class: "btn btn-danger", form: { 
-    data: { 
-      turbo_confirm: "Are you sure you want to remove all items from the cart?"
-    }
-   } %>
-   
-   <%= button_to "Check Out", new_order_path(@cart), method: :get, class: "btn btn-primary" %>
-</div>
+<% if @cart.line_items.present? %> 
+  <div class="d-flex justify-content-center align-items-center mt-3">
+    <%= button_to 'Remove All Items', user_cart_path(current_user, cart_id: @cart.id), method: :delete, class: "btn btn-danger", form: { 
+      data: { 
+        turbo_confirm: "Are you sure you want to remove all items from the cart?"
+      }
+    } %>
+    <%= button_to "Check Out", new_order_path(@cart), method: :get, class: "btn btn-primary" %>
+  </div>
+<% end %>
 <%= button_to "Back", :back, method: :get, class: "btn btn-primary" %>
