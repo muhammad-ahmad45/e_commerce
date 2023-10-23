@@ -15,7 +15,7 @@ class UsersController < ApplicationController
   def edit; end
   
   def update
-    if @user.update!(user_params)
+    if @user.update(user_params)
       redirect_to users_path
     else
       render :edit, status: :unprocessable_entity

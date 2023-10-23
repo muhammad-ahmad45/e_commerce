@@ -1,0 +1,18 @@
+<div class="text-center">
+  <h1>Thanks! for your Order</h1>
+  <b>An Email Confirmation is sent to you</b>
+</div>  <br>  <br>
+<div class="container text-center">
+  <div class="row justify-content-center">
+    <div class="col-md-6 order-md-2" style="border: 1px solid #000; padding: 20px;">
+      <h2>Order Details</h2>
+      <b><p>Order ID: <%= @order.id %></p></b>
+      <b><p>Order Address: <%= @order.address %></p></b>
+      <b><h5>Total Bill: <%= @order.total_bill %> Rs</h5>
+      <b><h3>User Details</h3>
+      <b><p>User ID: <%= @order.cart.user.id %></p></b>
+      <b><p>User Name: <%= @order.cart.user.username %></p></b>
+      <b><p>User Email: <%= @order.cart.user.email %></p></b>
+    </div>
+  </div>
+</div>

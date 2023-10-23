@@ -1,0 +1,32 @@
+<div class="container">
+  <h1 class="text-center">All Orders</h1>
+  <br>
+  <div class="table-responsive">
+    <table class="table table-bordered table-lg center">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Address</th>
+          <th>Total Bill</th>
+          <th>User ID</th>
+          <th>User Name</th>
+          <th>User Email</th>
+          <th>Order Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @orders.each do |order| %>
+          <tr>
+            <td><%= order.id %></td>
+            <td><%= order.address %></td>
+            <td><%= order.total_bill %> Rs</td>
+            <td><%= order.user.id %></td>
+            <td><%= order.user.username %></td>
+            <td><%= order.user.email %></td>
+            <td><%= render 'update_status', order: order %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

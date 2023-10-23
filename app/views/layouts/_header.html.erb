@@ -6,20 +6,35 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
-      <%if current_user && current_user.if_admin? %>
+        <%if current_user && current_user.is_admin? %>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/users"><h5> Users </h5> </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/orders"><h5> All Orders <h5> </a>
+          </li>
+        <% end %>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/users">Users</a>
+          <a class="nav-link" href="/products"> <h5> Products </h5> </a>
         </li>
-      <% end %>  
-        <li class="nav-item">
-          <a class="nav-link" href="/products">Products</a>
-        </li>
+        <%if current_user && (current_user.is_admin? || current_user.has_staff?) %>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/products/new"> <h5> Add Product </h5> </a>
+          </li>
+        <% end %>
+        <% if current_user && current_user.has_customer? %>
+          <li class="nav-item">
+            <%= link_to user_cart_path(current_user), class: "nav-link" do %>
+              <i class="bi bi-cart-fill fs-3"></i>
+            <% end %>
+          </li>
+        <% end %>
       </ul>
     </div>
     <ul class="navbar-nav ml-auto">
       <% if user_signed_in? %>
         <li class="nav-item">
-          <h3 class="nav-link">Welcome, as <%= current_user.email %>!</h3>
+          <h3 class="nav-link">Welcome, as <%= current_user.username %>!</h3>
         </li>
         <li class="nav-item">
           <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "btn btn-dark" %>
@@ -33,5 +48,6 @@
         </li>
       <% end %>
     </ul>
+    
   </div>
 </nav>

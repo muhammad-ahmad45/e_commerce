@@ -6,7 +6,12 @@ class CartsController < ApplicationController
     @product = Product.find(params[:product_id])
     @line_item = @cart.line_items.find_by(product: @product)
 
-    @line_item = @line_item ? @line_item.increment(:quantity) : @cart.line_items.build(product: @product, quantity: 1)
+    if @line_item
+      @line_item.increment(:quantity)
+      @line_item.update(total_price: @line_item.quantity * @line_item.total_price)
+    else
+      @line_item = @cart.line_items.build(product: @product, quantity: 1, total_price: @product.price)
+    end
 
     @line_item.save ? (redirect_to user_cart_path(@cart), notice: "#{ @product.title } added to cart.") : (render '/products')
     
@@ -24,7 +29,7 @@ class CartsController < ApplicationController
   private
 
   def set_cart
-    @cart = current_user.cart ? current_user.cart : current_user.create_cart
+    @cart = current_user.cart ? Cart.where(user_id: current_user.id).includes(:line_items).first : current_user.create_cart
   end
  
 end 
