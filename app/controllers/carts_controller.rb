@@ -29,8 +29,7 @@ class CartsController < ApplicationController
   private
 
   def set_cart
-    @cart = current_user.cart ? current_user.cart : current_user.create_cart
-    Cart.where(user_id: current_user.id).includes(:line_items).first
+    @cart = current_user.cart ? Cart.where(user_id: current_user.id).includes(:line_items).first : current_user.create_cart
   end
  
 end 

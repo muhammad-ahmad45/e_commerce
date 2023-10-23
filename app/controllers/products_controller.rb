@@ -5,14 +5,22 @@ class ProductsController < ApplicationController
   
   def index
     @products = Product.all.page(params[:page])
+
     if params[:min_price].present?
-      @products = @products.where("price >= ?", params[:min_price]).page(params[:page])
-    elsif params[:max_price].present?
-      @products = @products.where("price <= ?", params[:max_price]).page(params[:page])
-    elsif params[:title].present?
-      @products = @products.where("title = ?", params[:title]).page(params[:page])
-    else
-      puts "No Result Found"
+      @products = @products.where("price >= ?", params[:min_price])
+    end
+    if params[:max_price].present?
+      @products = @products.where("price <= ?", params[:max_price])
+    end
+    if params[:title].present?
+      search_term = "%#{params[:title]}%"
+      @products = @products.where("title LIKE ?", search_term)
+    end
+
+    @products = @products.page(params[:page])
+
+    if @products.empty?
+      @no_results_message = "No Results Found"
     end
   end
 
@@ -24,7 +32,7 @@ class ProductsController < ApplicationController
     @product = Product.new(product_params)
 
     if @product.save
-      redirect_to '/products'
+      redirect_to products_path
     else
       render :new, status: :unprocessable_entity
     end

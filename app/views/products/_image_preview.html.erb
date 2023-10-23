@@ -1,5 +1,5 @@
 <div data-controller="previews">
-<h5>  <%= form.label :image, 'Select Image', style: "display: block" %>  </h5>
+  <h5>  <%= form.label :image, 'Select Image', style: "display: block" %>  </h5>
   <%= form.file_field :image,
     direct_upload: true,
     data: { previews_target: "input", action: "change->previews#preview" } %>

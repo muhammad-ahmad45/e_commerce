@@ -1,25 +1,18 @@
 $(document).on('turbo:load', function() {
-  // Function to update the total bill
-  function updateTotalBill() {
+   // Function to update the total bill
+   function updateTotalBill() {
     var totalBill = 0;
 
-    // Iterate through each row in the table
-    $('.table tbody tr').each(function() {
-      var row = $(this);
-      var quantity = parseInt(row.find('.quantity').text());
-      var unitPrice = parseFloat(row.find('.unit-price').text());
-
-      // Calculate the total price for this row
-      var totalRowPrice = quantity * unitPrice;
-      row.find('.total').text(totalRowPrice);
-
-      // Add the row's total to the overall total bill
+    // Iterate through each element with class .total
+    $('.total').each(function() {
+      var totalRowPrice = parseFloat($(this).text());
       totalBill += totalRowPrice;
     });
 
     // Update the displayed total bill
     $('#total-bill').text(totalBill);
   }
+
 
   // Handle the click event for the "+" button
   $('.increase-quantity').click(function() {
@@ -77,20 +70,7 @@ function updateQuantity(lineItemId, newQuantity) {
   $.ajax({
     url: 'line_items/' + lineItemId + '/update_quantity',
     type: "PATCH",
-    data: { new_quantity: newQuantity },
-    success: function(response) {
-      if (response.success) {
-        // Quantity updated successfully
-        console.log('Quantity updated in the database:', response.new_quantity);
-      } else {
-        // Handle errors
-        console.error('Error updating quantity:', response.errors);
-      }
-    },
-    error: function() {
-      // Handle AJAX error
-      console.error('AJAX request failed');
-    }
+    data: { new_quantity: newQuantity }
   });
 }
   // Initial calculation of total bill when the page loads

@@ -3,7 +3,7 @@ class LineItemsController < ApplicationController
   def update_quantity
     @line_item = LineItem.find(params[:id])
     new_quantity = params[:new_quantity].to_i
-    if @line_item.update(quantity: new_quantity) &&  @line_item.update(total_price: new_quantity * @line_item.product.price)
+    if @line_item.update(quantity: new_quantity, total_price: new_quantity * @line_item.product.price)
       render json: { success: true, new_quantity: new_quantity }
     else
       render json: { success: false, errors: @line_item.errors.full_messages }

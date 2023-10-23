@@ -4,20 +4,17 @@ class OrdersController < ApplicationController
   after_action :send_email_and_clear_cart, only: [:create]
 
   def index
-    @orders = Order.all
-    @orders.includes(:user)
+    @orders = Order.all.includes(:user)
   end
   
   def new
     @order = Order.new
-    Cart.where(user_id: current_user.id).includes(:line_items).first
   end
 
   def create
     @cart = current_user.cart
-    @order = Order.new(order_params)
+    @order = current_user.orders.build(order_params)
     @order.cart = @cart
-    @order.user = current_user
     if @order.save
       redirect_to order_path(@order)
     else

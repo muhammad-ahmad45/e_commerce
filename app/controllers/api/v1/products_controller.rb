@@ -4,8 +4,6 @@ class Api::V1::ProductsController < ApplicationController
 
     if @products
       render json: {status: "SUCCESS", message: "Fetched all the products successfully", data: @products}, status: :ok
-    else
-      render json: @products.errors, status: :bad_request
     end
   end
 end
